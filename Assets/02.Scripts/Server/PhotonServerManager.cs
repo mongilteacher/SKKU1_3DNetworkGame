@@ -106,5 +106,4 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
         Debug.Log($"룸 생성에 성공 했습니다. : {PhotonNetwork.CurrentRoom.Name}");
     }
     
-    
 }
