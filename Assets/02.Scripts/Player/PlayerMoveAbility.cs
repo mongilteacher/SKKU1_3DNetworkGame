@@ -6,7 +6,8 @@ public class PlayerMoveAbility : MonoBehaviour
     public float JumpPower = 2.5f;
     
     private CharacterController _characterController;
-
+    private Animator _animator;
+    
     float _gravity = -9f;
     float _yVelocity = 0f;
 
@@ -14,6 +15,7 @@ public class PlayerMoveAbility : MonoBehaviour
     private void Start()
     {
         _characterController = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
     }
     
     private void Update()
@@ -30,7 +32,7 @@ public class PlayerMoveAbility : MonoBehaviour
         
         // 카메라가 바라보는 방향 기준으로 수정하기
         dir = Camera.main.transform.TransformDirection(dir);
-        
+        _animator.SetFloat("Move", dir.magnitude);
         
         // 2-1. 수직 속도에 중력 값을 적용한다.
         _yVelocity += _gravity * Time.deltaTime;
