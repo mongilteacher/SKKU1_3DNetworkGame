@@ -39,7 +39,6 @@ public class PlayerMoveAbility : MonoBehaviour
         dir.y = _yVelocity;
         
         // 2-2. 점프 적용
-        Debug.Log(_characterController.isGrounded);
         if (Input.GetKeyDown(KeyCode.Space) && _characterController.isGrounded)
         {
             _yVelocity = JumpPower;
