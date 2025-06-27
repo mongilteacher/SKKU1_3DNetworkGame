@@ -6,9 +6,11 @@ public class PlayerMoveAbility : PlayerAbility, IPunObservable
     private CharacterController _characterController;
     private Animator _animator;
     
-    float _gravity = -9f;
-    float _yVelocity = 0f;
+    private float _gravity = -9f;
+    private float _yVelocity = 0f;
 
+    private Vector3 _receivedPosition    = Vector3.zero;
+    private Quaternion _receivedRotation = Quaternion.identity;
     
     private void Start()
     {
@@ -34,11 +36,8 @@ public class PlayerMoveAbility : PlayerAbility, IPunObservable
             Debug.Log("수신중");
             // 데이터를 수신하는 상황 -> 받은 데이터를 세팅하면 됩니다.
             // 보내준 순서대로 받는다.
-            Vector3 receivedPosition = (Vector3)stream.ReceiveNext();
-            Quaternion receivedRotation = (Quaternion)stream.ReceiveNext();
-
-            transform.position = receivedPosition;
-            transform.rotation = receivedRotation;
+            _receivedPosition = (Vector3)stream.ReceiveNext();
+            _receivedRotation = (Quaternion)stream.ReceiveNext();
         }
     }
     
@@ -49,6 +48,10 @@ public class PlayerMoveAbility : PlayerAbility, IPunObservable
         // -> 내 캐릭터가 아니라면...
         if (_photonView.IsMine == false)
         {
+            
+            transform.position = Vector3.Lerp(transform.position, _receivedPosition, Time.deltaTime * 20f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, _receivedRotation, Time.deltaTime * 20f);
+            
             return;
         }
         
