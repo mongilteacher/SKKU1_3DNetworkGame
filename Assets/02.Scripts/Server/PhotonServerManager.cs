@@ -11,7 +11,7 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
 {
     // MonoBehaviourPunCallbacks : 유니티 이벤트 말고도 PUN 서버 이벤트를 받을 수 있다.
     private readonly string _gameVersion = "1.0.0";
-    private string _nickname = "Mongil";
+    private string _nickname = $"Mongil";
     
     private void Start()
     {

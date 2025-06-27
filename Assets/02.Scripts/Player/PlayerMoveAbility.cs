@@ -1,7 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class PlayerMoveAbility : PlayerAbility
+public class PlayerMoveAbility : PlayerAbility, IPunObservable
 {
     private CharacterController _characterController;
     private Animator _animator;
@@ -15,6 +15,33 @@ public class PlayerMoveAbility : PlayerAbility
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
     }
+
+    // 데이터 동기화를 위한 데이터 전송 및 수신 기능
+    // stream : 서버에서 주고받을 데이터가 담겨있는 변수
+    // info   : 송수신 성공/실패 여부에 대한 로그
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            Debug.Log("전송중");
+            // 내꺼의 데이터만 보내준다...
+            // 데이터를 전송하는 상황 -> 데이터를 보내주면 되고,
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+        }
+        else if (stream.IsReading)
+        {
+            Debug.Log("수신중");
+            // 데이터를 수신하는 상황 -> 받은 데이터를 세팅하면 됩니다.
+            // 보내준 순서대로 받는다.
+            Vector3 receivedPosition = (Vector3)stream.ReceiveNext();
+            Quaternion receivedRotation = (Quaternion)stream.ReceiveNext();
+
+            transform.position = receivedPosition;
+            transform.rotation = receivedRotation;
+        }
+    }
+    
     
     private void Update()
     {
