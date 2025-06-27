@@ -1,9 +1,8 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class PlayerMoveAbility : PlayerAbility
 {
-    public bool IsMove = true;
-    
     private CharacterController _characterController;
     private Animator _animator;
     
@@ -19,6 +18,14 @@ public class PlayerMoveAbility : PlayerAbility
     
     private void Update()
     {
+        // 포톤뷰가 내꺼가 아니라면
+        // -> 내 캐릭터가 아니라면...
+        if (_photonView.IsMine == false)
+        {
+            return;
+        }
+        
+        
         // 목표: 키보드 [W], [A], [S], [D] 키를 누르면 캐릭터를 그 방향으로 이동시키고 싶다.
         // 순서:
         // 1. 사용자의 키보드 입력 받기

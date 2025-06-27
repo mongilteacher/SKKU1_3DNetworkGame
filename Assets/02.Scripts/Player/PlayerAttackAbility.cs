@@ -13,12 +13,11 @@ public class PlayerAttackAbility : PlayerAbility
     
     private void Update()
     {
-        // 문제
-        // Ability에서 다른 Ability에 접근하는 효율적(편하고 좋은거)인 방법
-        // ex) PlayerMoveAbility의 IsMove 속성에 따라 공격 여부를 정하고 싶다....
+        if (_photonView.IsMine == false)
+        {
+            return;
+        }
 
-        bool isMove = _owner.GetAbility<PlayerMoveAbility>().IsMove;
-        
         _attackTimer += Time.deltaTime;
 
         if (Input.GetMouseButton(0) && _attackTimer >= (1f / _owner.Stat.AttackSpeed))
