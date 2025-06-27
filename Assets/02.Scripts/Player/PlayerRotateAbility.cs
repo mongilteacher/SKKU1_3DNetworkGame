@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class PlayerRotateAbility : MonoBehaviour
+public class PlayerRotateAbility : PlayerAbility
 {
     // 목표: 마우스를 조작하면 캐릭터/카메라를 그 방향으로 회전시키고 싶다.
     public Transform CameraRoot;
-    public float RotationSpeed = 10;
     
     // 마우스 입력값을 누적할 변수
     private float _mx;
@@ -20,8 +19,8 @@ public class PlayerRotateAbility : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
        
-        _mx += mouseX * RotationSpeed * Time.deltaTime;
-        _my += mouseY * RotationSpeed * Time.deltaTime;
+        _mx += mouseX * _owner.Stat.RotationSpeed * Time.deltaTime;
+        _my += mouseY * _owner.Stat.RotationSpeed * Time.deltaTime;
         
         _my = Mathf.Clamp(_my, -90f, 90f);
         

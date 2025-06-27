@@ -1,9 +1,8 @@
 using UnityEngine;
 
-public class PlayerMoveAbility : MonoBehaviour
+public class PlayerMoveAbility : PlayerAbility
 {
-    public float MoveSpeed = 7f;
-    public float JumpPower = 2.5f;
+    public bool IsMove = true;
     
     private CharacterController _characterController;
     private Animator _animator;
@@ -41,11 +40,11 @@ public class PlayerMoveAbility : MonoBehaviour
         // 2-2. 점프 적용
         if (Input.GetKeyDown(KeyCode.Space) && _characterController.isGrounded)
         {
-            _yVelocity = JumpPower;
+            _yVelocity = _owner.Stat.JumpPower;
         }
         
         // 3. 이동 속도에 따라 그 방향으로 이동하기
         // 캐릭터의 위치 = 현재 위치 + 속도  * 시간
-        _characterController.Move(dir * MoveSpeed * Time.deltaTime);
+        _characterController.Move(dir * _owner.Stat.MoveSpeed * Time.deltaTime);
     }
 }
