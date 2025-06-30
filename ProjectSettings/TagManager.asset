@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bullet
   - FollowCamera
+  - Weapon
   layers:
   - Default
   - TransparentFX

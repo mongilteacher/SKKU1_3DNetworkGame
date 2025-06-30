@@ -30,7 +30,6 @@ public class PlayerMoveAbility : PlayerAbility, IPunObservable
     {
         if (stream.IsWriting)
         {
-            Debug.Log("전송중");
             // 내꺼의 데이터만 보내준다...
             // 데이터를 전송하는 상황 -> 데이터를 보내주면 되고,
             stream.SendNext(transform.position);
@@ -38,7 +37,6 @@ public class PlayerMoveAbility : PlayerAbility, IPunObservable
         }
         else if (stream.IsReading)
         {
-            Debug.Log("수신중");
             // 데이터를 수신하는 상황 -> 받은 데이터를 세팅하면 됩니다.
             // 보내준 순서대로 받는다.
             _receivedPosition = (Vector3)stream.ReceiveNext();

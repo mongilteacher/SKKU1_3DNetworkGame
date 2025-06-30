@@ -10,9 +10,14 @@ public class PlayerAttackAbility : PlayerAbility
     private bool _isAttacking = false;
     public bool IsAttacking => _isAttacking;
 
+    public Collider WeaponCollider;
+    
+
     private void Start()
     {
         _animator = GetComponent<Animator>();
+
+        DeActiveCollider();
     }
     
     // - '위치/회전' 처럼 상시로 확인이 필요한 데이터 동기화: IPunObservable(OnPhotonSerializeView)
@@ -49,11 +54,30 @@ public class PlayerAttackAbility : PlayerAbility
     }
 
     
+    public void ActiveCollider()
+    {
+        WeaponCollider.enabled = true;
+    }
+
+    public void DeActiveCollider()
+    {
+        WeaponCollider.enabled = false;
+    }
+    
+    
+    
     // RPC로 호출할 함수는 반드시 [PunRPC] 어트리뷰트를 함수 앞에 명시해줘야 한다.
     [PunRPC]
     private void PlayAttackAnimation(int randomNumber)
     {
         _animator.SetTrigger($"Attack{randomNumber}");
+    }
+
+
+    public void Hit(IDamaged damagedObject)
+    {
+        DeActiveCollider();
+        damagedObject.Damaged(_owner.Stat.Damage);
     }
 }
 

@@ -4,12 +4,19 @@ using System;
 using ExitGames.Client.Photon.StructWrapping;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamaged
 {
     public PlayerStat Stat;
 
     private Dictionary<Type, PlayerAbility> _abilitiesCache = new();
-    
+
+
+    public void Damaged(float damage)
+    {
+        Stat.Health = Mathf.Max(0, Stat.Health - damage);
+        
+        Debug.Log($"남은체력: {Stat.Health}");
+    }
     
 
     public T GetAbility<T>() where T : PlayerAbility

@@ -31,6 +31,7 @@ public class UI_PlayerStat : MonoBehaviour
             return;
         }
         
+        HealthSlider.value = _player.Stat.Health /  _player.Stat.MaxHealth;
         StatminaSlider.value = _player.Stat.Stamina /  _player.Stat.MaxStamina;
     }
     
