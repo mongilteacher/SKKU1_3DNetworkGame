@@ -2461,9 +2461,9 @@ MonoBehaviour:
     MaxStamina: 100
     Stamina: 100
     StaminaRecovery: 20
-    StaminaJumpCost: 20
+    StaminaJumpCost: 10
     StaminaAttackCost: 10
-    StaminaRunCost: 10
+    StaminaRunCost: 5
 --- !u!114 &4850361566416450686
 MonoBehaviour:
   m_ObjectHideFlags: 0
