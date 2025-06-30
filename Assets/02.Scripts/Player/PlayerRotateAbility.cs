@@ -20,6 +20,9 @@ public class PlayerRotateAbility : PlayerAbility
         {
             CinemachineCamera camera = GameObject.FindWithTag("FollowCamera").GetComponent<CinemachineCamera>();
             camera.Follow = CameraRoot;
+            
+            UI_PlayerStat ui_playerStat = FindAnyObjectByType<UI_PlayerStat>();
+            ui_playerStat.SetPlayer(_owner);
         }
     }
     

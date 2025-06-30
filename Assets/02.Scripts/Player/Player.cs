@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using ExitGames.Client.Photon.StructWrapping;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public PlayerStat Stat;
 
     private Dictionary<Type, PlayerAbility> _abilitiesCache = new();
+    
     
 
     public T GetAbility<T>() where T : PlayerAbility
@@ -20,7 +23,7 @@ public class Player : MonoBehaviour
 
         // 게으른 초기화/로딩 -> 처음에 곧바로 초기화/로딩을 하는게 아니라
         //                    필요할때만 하는.. 뒤로 미루는 기법
-        ability = GetComponent<T>();
+        ability = GetComponentInChildren<T>();
 
         if (ability != null)
         {
@@ -31,4 +34,16 @@ public class Player : MonoBehaviour
         
         throw new Exception($"어빌리티 {type.Name}을 {gameObject.name}에서 찾을 수 없습니다.");
     }
+    
+
+    private void Update()
+    {
+        if (!GetAbility<PlayerMoveAbility>().IsJumping && !GetAbility<PlayerMoveAbility>().IsRunning)
+        {
+            Stat.Stamina = Mathf.Min(Stat.MaxStamina, Stat.Stamina + Stat.StaminaRecovery * Time.deltaTime);
+        }
+    }
 }
+
+
+

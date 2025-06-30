@@ -11,6 +11,11 @@ public class PlayerMoveAbility : PlayerAbility, IPunObservable
 
     private Vector3 _receivedPosition    = Vector3.zero;
     private Quaternion _receivedRotation = Quaternion.identity;
+
+    private bool _isRunning = false;
+    public bool IsRunning => _isRunning;
+    public bool IsJumping => !_characterController.isGrounded;
+    
     
     private void Start()
     {
@@ -75,13 +80,28 @@ public class PlayerMoveAbility : PlayerAbility, IPunObservable
         dir.y = _yVelocity;
         
         // 2-2. 점프 적용
-        if (Input.GetKeyDown(KeyCode.Space) && _characterController.isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && _characterController.isGrounded && _owner.Stat.Stamina >= _owner.Stat.StaminaJumpCost)
         {
+            _owner.Stat.Stamina -= _owner.Stat.StaminaJumpCost;
             _yVelocity = _owner.Stat.JumpPower;
         }
         
         // 3. 이동 속도에 따라 그 방향으로 이동하기
         // 캐릭터의 위치 = 현재 위치 + 속도  * 시간
-        _characterController.Move(dir * _owner.Stat.MoveSpeed * Time.deltaTime);
+
+        
+        if (Input.GetKey(KeyCode.LeftShift) && _owner.Stat.Stamina > 0)   // - 뛰기
+        {
+            _isRunning = true;
+            _owner.Stat.Stamina -= _owner.Stat.StaminaRunCost * Time.deltaTime;
+            _characterController.Move(dir * _owner.Stat.RunSpeed * Time.deltaTime);
+        }
+        else                                   // - 걷기
+        {
+            _isRunning = false;
+            _characterController.Move(dir * _owner.Stat.MoveSpeed * Time.deltaTime);
+        }
+        
+        _animator.SetBool("Run", _isRunning);
     }
 }
