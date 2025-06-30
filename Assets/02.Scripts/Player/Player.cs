@@ -17,7 +17,7 @@ public class Player : MonoBehaviour, IDamaged
     {
         Stat.Health = Mathf.Max(0, Stat.Health - damage);
         
-        Debug.Log($"남은체력: {Stat.Health}");
+        GetAbility<PlayerHealthbarAbility>().Refresh();
     }
     
 
