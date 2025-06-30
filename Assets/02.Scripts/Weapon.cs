@@ -17,13 +17,10 @@ public class Weapon : MonoBehaviour
             return;
         }
         
-        Debug.Log("음냐냐");
-        
         // IDamaged 인터페이스를 구현하고 있는지 확인
-        IDamaged damagedObject = other.GetComponent<IDamaged>();
-        if (damagedObject != null)
+        if (other.GetComponent<IDamaged>() != null)
         {
-            _attackAbility.Hit(damagedObject);
+            _attackAbility.Hit(other);
         }
     }
 }

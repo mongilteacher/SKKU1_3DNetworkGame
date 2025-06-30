@@ -74,10 +74,23 @@ public class PlayerAttackAbility : PlayerAbility
     }
 
 
-    public void Hit(IDamaged damagedObject)
+    public void Hit(Collider other)
     {
+        // 내 캐릭터가 아니면...
+        if (_photonView.IsMine == false)
+        {
+            return;
+        }
+        
+        if (other.GetComponent<IDamaged>() == null) return;
+
         DeActiveCollider();
-        damagedObject.Damaged(_owner.Stat.Damage);
+        
+        // RPC로 호출해야지 다른 사람의 게임오브젝트들도 이 함수가 실행된다.
+        // damagedObject.Damaged(_owner.Stat.Damage);
+        
+        PhotonView otherPhotonView = other.GetComponent<PhotonView>();
+        otherPhotonView.RPC(nameof(Player.Damaged), RpcTarget.All, _owner.Stat.Damage);
     }
 }
 

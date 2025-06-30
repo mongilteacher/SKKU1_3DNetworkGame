@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using ExitGames.Client.Photon.StructWrapping;
+using Photon.Pun;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamaged
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour, IDamaged
     private Dictionary<Type, PlayerAbility> _abilitiesCache = new();
 
 
+    [PunRPC]
     public void Damaged(float damage)
     {
         Stat.Health = Mathf.Max(0, Stat.Health - damage);
