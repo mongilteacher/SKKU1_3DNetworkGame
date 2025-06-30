@@ -23,6 +23,9 @@ public class PlayerRotateAbility : PlayerAbility
             
             UI_PlayerStat ui_playerStat = FindAnyObjectByType<UI_PlayerStat>();
             ui_playerStat.SetPlayer(_owner);
+            
+            MinimapCamera minimapCamera = FindAnyObjectByType<MinimapCamera>();
+            minimapCamera.Target = CameraRoot;
         }
     }
     

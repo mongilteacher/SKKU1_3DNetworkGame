@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class PlayerAttackAbility : PlayerAbility
@@ -13,6 +14,14 @@ public class PlayerAttackAbility : PlayerAbility
     {
         _animator = GetComponent<Animator>();
     }
+    
+    // - '위치/회전' 처럼 상시로 확인이 필요한 데이터 동기화: IPunObservable(OnPhotonSerializeView)
+    // - '트리거/공격/피격' 처럼 간헐적으로 특정한 이벤트가 발생했을때의 변화된 데이터 동기화: RPC
+    //    RPC: Remote Procedure Call
+    //         ㄴ 물리적으로 떨어져 있는 다른 디바이스의 함수를 호출하는 기능
+    //         ㄴ RPC 함수를 호출하면 네트워크를 통해 다른 사용자의 스크립트에서 해당 함수가 호출된다.
+    
+    
     
     private void Update()
     {
@@ -30,8 +39,21 @@ public class PlayerAttackAbility : PlayerAbility
             
             _attackTimer = 0f;
             
-            _animator.SetTrigger($"Attack{Random.Range(1, 4)}");
+            // 1. 일반 메서드 호출 방식
+            // PlayAttackAnimation( Random.Range(1, 4));
+            
+            // 2. RPC 메서드 호출 방식
+            // 네임오브를 쓰자! 오타주의!
+            _photonView.RPC(nameof(PlayAttackAnimation), RpcTarget.All, Random.Range(1, 4));
         }
+    }
+
+    
+    // RPC로 호출할 함수는 반드시 [PunRPC] 어트리뷰트를 함수 앞에 명시해줘야 한다.
+    [PunRPC]
+    private void PlayAttackAnimation(int randomNumber)
+    {
+        _animator.SetTrigger($"Attack{randomNumber}");
     }
 }
 
