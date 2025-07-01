@@ -1,19 +1,42 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealthbarAbility : PlayerAbility
+public class PlayerHealthbarAbility : PlayerAbility, IPunObservable
 {
     public Slider HealthBarSlider;
 
-    private void Start()
+
+    private float _receviedValue = 1f;
+    
+    
+    private void Update()
     {
         Refresh();
-
-        //_owner.OnDataChanged += Refresh;
     }
     
-    public void Refresh()
+    private void Refresh()
     {
-        HealthBarSlider.value = _owner.Stat.Health / _owner.Stat.MaxHealth;
+        if (_photonView.IsMine)
+        {
+            HealthBarSlider.value = _owner.Stat.Health / _owner.Stat.MaxHealth;
+        }
+        else
+        {
+            HealthBarSlider.value = _receviedValue;
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(_owner.Stat.Health / _owner.Stat.MaxHealth);
+        }
+        else if (stream.IsReading)
+        {
+            float value = (float)stream.ReceiveNext();
+            _receviedValue = value;
+        }
     }
 }

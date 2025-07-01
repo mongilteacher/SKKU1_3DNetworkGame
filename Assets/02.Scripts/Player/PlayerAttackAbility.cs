@@ -30,7 +30,7 @@ public class PlayerAttackAbility : PlayerAbility
     
     private void Update()
     {
-        if (_photonView.IsMine == false)
+        if (_photonView.IsMine == false || _owner.State == EPlayerState.Death)
         {
             return;
         }
@@ -77,7 +77,7 @@ public class PlayerAttackAbility : PlayerAbility
     public void Hit(Collider other)
     {
         // 내 캐릭터가 아니면...
-        if (_photonView.IsMine == false)
+        if (_photonView.IsMine == false || _owner.State == EPlayerState.Death)
         {
             return;
         }
@@ -90,7 +90,7 @@ public class PlayerAttackAbility : PlayerAbility
         // damagedObject.Damaged(_owner.Stat.Damage);
         
         PhotonView otherPhotonView = other.GetComponent<PhotonView>();
-        otherPhotonView.RPC(nameof(Player.Damaged), RpcTarget.AllBuffered, _owner.Stat.Damage);
+        otherPhotonView.RPC(nameof(Player.Damaged), RpcTarget.All, _owner.Stat.Damage);
     }
 }
 
