@@ -34,7 +34,7 @@ public class Player : MonoBehaviour, IDamaged
     }
 
     [PunRPC]
-    public void Damaged(float damage)
+    public void Damaged(float damage, int actorNumber)
     {
         if (_state == EPlayerState.Death) return;
         
@@ -53,6 +53,8 @@ public class Player : MonoBehaviour, IDamaged
             // 5초 동안(못 움직이고 , 못 맞고, 못 때린다.)
             // 5초 후에 체력과 스태미너 회복된 상태에서 랜덤한 위치에 리스폰
             StartCoroutine(Death_Coroutine());
+
+            RoomManager.Instance.OnPlayerDeath(_photonView.Owner.ActorNumber, actorNumber);
         }
         else
         {

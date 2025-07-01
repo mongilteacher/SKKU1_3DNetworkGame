@@ -65,14 +65,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.20087764
+      - time: 0.046694208
         functionName: ActiveCollider
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.7402435
+      - time: 0.86008275
         functionName: DeActiveCollider
         data: 
         objectReferenceParameter: {instanceID: 0}
