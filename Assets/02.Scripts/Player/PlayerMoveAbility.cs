@@ -47,9 +47,14 @@ public class PlayerMoveAbility : PlayerAbility, IPunObservable
     
     private void Update()
     {
+        if (_owner.State == EPlayerState.Death)
+        {
+            return;
+        }
+        
         // 포톤뷰가 내꺼가 아니라면
         // -> 내 캐릭터가 아니라면...
-        if (_photonView.IsMine == false || _owner.State == EPlayerState.Death)
+        if (_photonView.IsMine == false)
         {
             
             transform.position = Vector3.Lerp(transform.position, _receivedPosition, Time.deltaTime * 20f);
@@ -57,6 +62,8 @@ public class PlayerMoveAbility : PlayerAbility, IPunObservable
             
             return;
         }
+        
+        
         
         
         // 목표: 키보드 [W], [A], [S], [D] 키를 누르면 캐릭터를 그 방향으로 이동시키고 싶다.

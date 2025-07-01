@@ -22,11 +22,13 @@ public class Player : MonoBehaviour, IDamaged
     
     private Dictionary<Type, PlayerAbility> _abilitiesCache = new();
 
+    private PhotonView _photonView;
     private Animator _animator;
     private CharacterController _characterController;
 
     private void Awake()
     {
+        _photonView = GetComponent<PhotonView>();
         _animator = GetComponent<Animator>();
         _characterController = GetComponent<CharacterController>();
     }
@@ -34,6 +36,8 @@ public class Player : MonoBehaviour, IDamaged
     [PunRPC]
     public void Damaged(float damage)
     {
+        if (_state == EPlayerState.Death) return;
+        
         Stat.Health = Mathf.Max(0, Stat.Health - damage);
 
         if (Stat.Health <= 0)
@@ -64,7 +68,13 @@ public class Player : MonoBehaviour, IDamaged
 
         _state = EPlayerState.Live;
         _animator.SetTrigger("Live");        
-        // 리스폰 코드
+        
+        // 리스폰 코드 : 주인만 움직여야 한다.
+        if (_photonView.IsMine)
+        {
+            var randomSpawnPoint = SpawnPoints.Instance.GetRandomSpawnPoint();
+            transform.position = randomSpawnPoint;
+        }
     }
     
 
