@@ -40,6 +40,9 @@ public class Player : MonoBehaviour, IDamaged
         
         Stat.Health = Mathf.Max(0, Stat.Health - damage);
 
+        // 타격 이펙트 생성
+        
+        
         if (Stat.Health <= 0)
         {
             _state = EPlayerState.Death;
@@ -50,6 +53,11 @@ public class Player : MonoBehaviour, IDamaged
             // 5초 동안(못 움직이고 , 못 맞고, 못 때린다.)
             // 5초 후에 체력과 스태미너 회복된 상태에서 랜덤한 위치에 리스폰
             StartCoroutine(Death_Coroutine());
+        }
+        else
+        {
+            // RPC로 호출 X
+            GetAbility<PlayerShakingAbility>().Shake();
         }
     }
 
