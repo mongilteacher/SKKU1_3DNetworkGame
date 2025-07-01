@@ -2551,6 +2551,7 @@ MonoBehaviour:
   - {fileID: 4850361566416450686}
   - {fileID: 7193820102048925399}
   - {fileID: 3617351033781011651}
+  - {fileID: 5693593251309255865}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -2600,6 +2601,12 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 1
     Name: Run
+  - Type: 9
+    SynchronizeType: 0
+    Name: Death
+  - Type: 9
+    SynchronizeType: 0
+    Name: Live
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0

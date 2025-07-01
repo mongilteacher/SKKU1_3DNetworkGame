@@ -28,7 +28,7 @@ public class PlayerMoveAbility : PlayerAbility, IPunObservable
     // info   : 송수신 성공/실패 여부에 대한 로그
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        /*if (stream.IsWriting)
+        if (stream.IsWriting)
         {
             // 내꺼의 데이터만 보내준다...
             // 데이터를 전송하는 상황 -> 데이터를 보내주면 되고,
@@ -41,7 +41,7 @@ public class PlayerMoveAbility : PlayerAbility, IPunObservable
             // 보내준 순서대로 받는다.
             _receivedPosition = (Vector3)stream.ReceiveNext();
             _receivedRotation = (Quaternion)stream.ReceiveNext();
-        }*/
+        }
     }
     
     
