@@ -60,9 +60,7 @@ public class Player : MonoBehaviour, IDamaged
         _characterController.enabled = false;
 
         yield return wait;
-
-        _characterController.enabled = true;
-
+        
         Stat.Health = Stat.MaxHealth;
         Stat.Stamina = Stat.MaxStamina;
 
@@ -75,6 +73,8 @@ public class Player : MonoBehaviour, IDamaged
             var randomSpawnPoint = SpawnPoints.Instance.GetRandomSpawnPoint();
             transform.position = randomSpawnPoint;
         }
+        
+        _characterController.enabled = true;
     }
     
 
