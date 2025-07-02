@@ -5,6 +5,7 @@ using System.Collections;
 using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public enum EPlayerState
 {
@@ -16,6 +17,9 @@ public enum EPlayerState
 public class Player : MonoBehaviour, IDamaged
 {
     public PlayerStat Stat;
+
+    public int Score = 0;
+    
 
     private EPlayerState _state = EPlayerState.Live;
     public EPlayerState State => _state;
@@ -55,6 +59,11 @@ public class Player : MonoBehaviour, IDamaged
             StartCoroutine(Death_Coroutine());
 
             RoomManager.Instance.OnPlayerDeath(_photonView.Owner.ActorNumber, actorNumber);
+
+            if (_photonView.IsMine)
+            {
+                MakeItems(Random.Range(1, 4));
+            }
         }
         else
         {
@@ -62,6 +71,15 @@ public class Player : MonoBehaviour, IDamaged
             GetAbility<PlayerShakingAbility>().Shake();
         }
     }
+
+    private void MakeItems(int count)
+    {
+        for (int i = 0; i < count; ++i)
+        {
+            PhotonNetwork.Instantiate("ScoreItem", transform.position + new Vector3(0, 2, 0), Quaternion.identity, 0);
+        }
+    }
+    
 
     private IEnumerator Death_Coroutine()
     {

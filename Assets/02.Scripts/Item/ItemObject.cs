@@ -2,15 +2,14 @@ using UnityEngine;
 
 public class ItemObject : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (other.CompareTag("Player"))
+        {
+            Player player = other.GetComponent<Player>();
+            player.Score += 10;
+            
+            Destroy(gameObject);
+        }
     }
 }

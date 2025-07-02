@@ -2363,7 +2363,7 @@ GameObject:
   - component: {fileID: 2007267907002121596}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2462,6 +2462,7 @@ MonoBehaviour:
     StaminaJumpCost: 10
     StaminaAttackCost: 10
     StaminaRunCost: 5
+  Score: 0
 --- !u!114 &4850361566416450686
 MonoBehaviour:
   m_ObjectHideFlags: 0
