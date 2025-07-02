@@ -13,7 +13,7 @@ public enum EPlayerState
     Death
 }
 
-
+[RequireComponent(typeof(PlayerMoveAbility))]
 public class Player : MonoBehaviour, IDamaged
 {
     public PlayerStat Stat;
@@ -76,7 +76,12 @@ public class Player : MonoBehaviour, IDamaged
     {
         for (int i = 0; i < count; ++i)
         {
-            PhotonNetwork.Instantiate("ScoreItem", transform.position + new Vector3(0, 2, 0), Quaternion.identity, 0);
+            // 포톤의 네트워크 객체의 생명 주기
+            // Player : 플레이어가 생성하고, 플레이어가 나가면 자동삭제 (PhotonNetwork.Instantiate/Destroy)
+            // Room   : 방장이 생성하고, 룸이 없어지면 삭제.. (PhotonNetwork.InstantiatateRoomObject/Destory)
+            // PhotonNetwork.InstantiateRoomObject("ScoreItem", transform.position + new Vector3(0, 2, 0), Quaternion.identity, 0);
+            
+            ItemObjectFactory.Instance.RequestCreate(EItemType.Score, transform.position + new Vector3(0, 2, 0));
         }
     }
     

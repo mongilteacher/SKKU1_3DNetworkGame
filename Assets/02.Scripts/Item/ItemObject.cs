@@ -1,7 +1,19 @@
 using UnityEngine;
 using Photon.Pun;
 
-public class ItemObject : MonoBehaviour
+
+public enum EItemType
+{
+    Score,
+    Health,
+    Stamina
+}
+
+[RequireComponent(typeof(PhotonView))]
+[RequireComponent(typeof(PhotonTransformView))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Collider))]
+public class ItemObject : MonoBehaviourPun
 {
     private void OnTriggerEnter(Collider other)
     {
@@ -11,6 +23,7 @@ public class ItemObject : MonoBehaviour
             player.Score += 10;
             
             PhotonNetwork.Destroy(gameObject);
+            ItemObjectFactory.Instance.RequestDelete(photonView.ViewID);
         }
     }
 }
