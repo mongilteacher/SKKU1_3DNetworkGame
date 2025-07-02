@@ -55,8 +55,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public void OnPlayerDeath(int actorNumber, int otherActorNumber)
     {
         // actorNumber가 otherActorNumber에 의해 죽었다.
-        string deathedNickname = _room.Players[actorNumber].NickName;
-        string attackerNickname = _room.Players[otherActorNumber].NickName;
+        string deathedNickname = _room.Players[actorNumber].NickName + "_" + actorNumber;
+        string attackerNickname = _room.Players[otherActorNumber].NickName + "_" + otherActorNumber;
 
         OnPlayerDeathed?.Invoke(deathedNickname, attackerNickname);
     }
