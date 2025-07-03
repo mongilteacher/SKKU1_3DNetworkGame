@@ -17,8 +17,6 @@ public enum EPlayerState
 public class Player : MonoBehaviour, IDamaged
 {
     public PlayerStat Stat;
-
-    public int Score = 0;
     
 
     private EPlayerState _state = EPlayerState.Live;

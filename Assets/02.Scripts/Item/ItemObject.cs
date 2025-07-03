@@ -32,13 +32,11 @@ public class ItemObject : MonoBehaviourPun
                 return;
             }
             
-            player.Score += 10;
-
             switch (_itemType)
             {
                 case EItemType.Score:
                 {
-                    player.Score += 10;
+                   ScoreManager.Instance.AddScore(100);
                     break;
                 }
 
