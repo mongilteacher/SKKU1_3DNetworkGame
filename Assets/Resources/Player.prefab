@@ -2462,7 +2462,6 @@ MonoBehaviour:
     StaminaJumpCost: 10
     StaminaAttackCost: 10
     StaminaRunCost: 5
-  Score: 0
 --- !u!114 &4850361566416450686
 MonoBehaviour:
   m_ObjectHideFlags: 0

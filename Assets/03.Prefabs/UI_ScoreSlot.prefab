@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 292963956183078831}
   - component: {fileID: 4683262437839413366}
   - component: {fileID: 5747192869379285838}
+  - component: {fileID: 9023812953896907461}
   m_Layer: 5
   m_Name: UI_ScoreSlot
   m_TagString: Untagged
@@ -105,6 +106,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &9023812953896907461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835950466526017392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd044577d6adfa4797d00352c4549fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RankTextUI: {fileID: 3890241291382950095}
+  NicknameTextUI: {fileID: 4485162999525604928}
+  ScoreTextUI: {fileID: 989170836542216390}
 --- !u!1 &1014636645534167716
 GameObject:
   m_ObjectHideFlags: 0
