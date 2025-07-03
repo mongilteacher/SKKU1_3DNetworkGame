@@ -74,6 +74,19 @@ public class Player : MonoBehaviour, IDamaged
 
     private void MakeItems(int count)
     {
+        // 30% 확률로 포션 드랍
+        if (Random.Range(0f, 1f) < 0.3f)
+        {
+            if (Random.Range(0, 2) == 0)
+            {
+                ItemObjectFactory.Instance.RequestCreate(EItemType.Health, transform.position + new Vector3(0, 2, 0));
+            }
+            else
+            {
+                ItemObjectFactory.Instance.RequestCreate(EItemType.Stamina, transform.position + new Vector3(0, 2, 0));
+            }
+        }
+        
         for (int i = 0; i < count; ++i)
         {
             // 포톤의 네트워크 객체의 생명 주기
