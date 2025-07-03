@@ -57,7 +57,7 @@ public class ItemObject : MonoBehaviourPun
                 }
             }
             
-            PhotonNetwork.Destroy(gameObject);
+            //PhotonNetwork.Destroy(gameObject);
             ItemObjectFactory.Instance.RequestDelete(photonView.ViewID);
         }
     }
