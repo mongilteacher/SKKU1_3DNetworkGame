@@ -7,6 +7,7 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviourPunCallbacks
 {
     public static ScoreManager Instance { get; private set; }
+    
     private void Awake()
     {
         Instance = this;
@@ -17,7 +18,8 @@ public class ScoreManager : MonoBehaviourPunCallbacks
 
     public event Action OnDataChanged;
 
-    private int _killCount = 3;
+    private int _killCount = 0;                                   // 1줄
+    
     private int _score = 0;
     public int Score => _score;
     
@@ -33,10 +35,17 @@ public class ScoreManager : MonoBehaviourPunCallbacks
     private void Refresh()
     {
         Hashtable hashTable = new Hashtable();
-        hashTable.Add("Score", _score);
-        
+        hashTable.Add("Score", _killCount * 5000 + _score);       // 1.5줄
+         
         PhotonNetwork.LocalPlayer.SetCustomProperties(hashTable);
     }
+
+    public void AddKillCount()
+    {
+        _killCount += 1; 
+        Refresh();
+        
+    }  // 2.5줄
 
     public void AddScore(int addedScore)
     {

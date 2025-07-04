@@ -58,8 +58,11 @@ public class Player : MonoBehaviour, IDamaged
 
             RoomManager.Instance.OnPlayerDeath(_photonView.Owner.ActorNumber, actorNumber);
 
+            // 내꺼 일때
             if (_photonView.IsMine)
             {
+                var actorPlayer = PhotonNetwork.CurrentRoom.GetPlayer(actorNumber); 
+                _photonView.RPC(nameof(RequestAddKillCount), actorPlayer);    
                 MakeItems(Random.Range(1, 4));
             }
         }
@@ -68,6 +71,12 @@ public class Player : MonoBehaviour, IDamaged
             // RPC로 호출 X
             GetAbility<PlayerShakingAbility>().Shake();
         }
+    }
+
+    [PunRPC]
+    public void RequestAddKillCount()         
+    {
+        ScoreManager.Instance.AddKillCount();
     }
 
     private void MakeItems(int count)
