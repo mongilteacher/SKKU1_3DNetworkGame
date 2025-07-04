@@ -21,8 +21,28 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     
     // 내가 방에 입장하면 자동으로 호출되는 함수
+    bool _initialized = false;
     public override void OnJoinedRoom()
     {
+        Init();
+    }
+
+    private void Start()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            Init();
+        }
+    }
+    private void Init()
+    {
+        if (_initialized)
+        {
+            return;
+        }
+        
+        _initialized = true;
+        
         // 1. 플레이어 생성
         GeneratePlayer();
 

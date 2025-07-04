@@ -11,7 +11,24 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
 {
     // MonoBehaviourPunCallbacks : 유니티 이벤트 말고도 PUN 서버 이벤트를 받을 수 있다.
     private readonly string _gameVersion = "1.0.0";
-    private string _nickname = $"Mongil";
+    
+    private static PhotonServerManager _instance;
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    
+    
     
     private void Start()
     {
@@ -25,7 +42,6 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
         // 1. 버전 : 버전이 다르면 다른 서버로 접속이 된다.
         PhotonNetwork.GameVersion = _gameVersion;
         // 2. 닉네임 : 게임에서 사용할 사용자의 별명(중복 가능 -> 판별을 위해서는 ActorID)
-        PhotonNetwork.NickName = _nickname;
         
         // 방장이 로드한 씬으로 다른 참여자가 똑같이 이동하게끔 동기화 해주는 옵션
         // 방장: 방을 만든 소유자이자 "마스터 클라이언트" (방마다 한명의 마스터 클라이언트가 존재)
@@ -62,7 +78,7 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
         Debug.Log($"InLobby: {PhotonNetwork.InLobby}"); // 로비 입장 유무
 
         // 랜덤 방에 들어간다.
-        PhotonNetwork.JoinRandomRoom();
+        // PhotonNetwork.JoinRandomRoom();
     }
     
     // 방에 입장한 후 호출되는 함수
@@ -70,8 +86,14 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
     {
         Debug.Log($"룸 입장 {PhotonNetwork.InRoom}. : {PhotonNetwork.CurrentRoom.Name}");
         Debug.Log($"플레이어 : {PhotonNetwork.CurrentRoom.PlayerCount}명");
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("Battle");
+        }
         
-        // 룸에 접속한 사용자 정보
+        
+        /*// 룸에 접속한 사용자 정보
         Dictionary<int, Photon.Realtime.Player> roomPlayers = PhotonNetwork.CurrentRoom.Players;
         foreach (KeyValuePair<int, Photon.Realtime.Player> player in roomPlayers)
         {
@@ -81,14 +103,15 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
             
             // 진짜 고유 아이디
             Debug.Log(player.Value.UserId); // 친구 기능, 귓속말 등등에 쓰이지만... 플젝때 알아서쓰세요.
-        }
+        }*/
     }
     
     // 랜덤 방 입장에 실패하면 호출되는 함수
     public override void OnJoinRandomFailed(short returCode, string message)
     {
         Debug.Log($"랜덤 방 입장에 실패했습니다: {returCode} : {message}");
-        
+
+        return;
         
         // Room 속성 정의
         RoomOptions roomOptions = new RoomOptions();
