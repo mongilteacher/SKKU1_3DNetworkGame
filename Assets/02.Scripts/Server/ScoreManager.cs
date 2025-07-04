@@ -16,7 +16,8 @@ public class ScoreManager : MonoBehaviourPunCallbacks
     public Dictionary<string, int> Scores => _scores;
 
     public event Action OnDataChanged;
-    
+
+    private int _killCount = 3;
     private int _score = 0;
     public int Score => _score;
     
